@@ -5,6 +5,7 @@ var atributos = null;
 var leerAtributos = false;
 var leerContenido = false;
 let matriz = new Array();
+var columnas = undefined;
 
 $(function () {
   //FORMULA MERITO
@@ -52,10 +53,11 @@ function iniciar(){
   console.log(atributos);
   console.log(matriz);
 
-  let columnas = atributos.length;
+  columnas = atributos.length;
 
   //tratamos cada columna para calcular sus meritos
-  for(let i = 0; i < columnas; i++){
+  // -1 porque la ultima columna es el valor
+  for(let i = 0; i < columnas - 1; i++){
     merito(i);
   }
 
@@ -63,9 +65,8 @@ function iniciar(){
 
 function merito(col){
   let hasmap = new Map();
-
-  
-  for(let i = 0; i < matriz.length; i++){
+  let resul = new Map();
+  /* for(let i = 0; i < matriz.length; i++){
 
     if(matriz[i][matriz.length - 1] == "si"){
       let punteroValorSi = hasmap.get(matriz[i][col] + "si");
@@ -82,23 +83,43 @@ function merito(col){
         hasmap.set(matriz[i][col] + "no", 1);
       }
     }
-    
+  }  */
 
-  
-    
-
+  // guardamos los a por cada valor en un hashmap
+  for(let i = 0; i < matriz.length; i++){
     if(hasmap.has(matriz[i][col]) ){
       let val = hasmap.get(matriz[i][col]);
       hasmap.set(matriz[i][col], val + 1);
+
+      if(matriz[i][columnas - 1] == "si"){
+        let val2 = resul.get(matriz[i][col]);
+        // si es und es que sale por primera vez
+        if(val2 == undefined)
+          val2 = 0;
+        resul.set(matriz[i][col], val2 + 1);
+      }
+
     }
     else{
       hasmap.set(matriz[i][col], 1);
-    }
 
+      if(matriz[i][columnas - 1] == "si"){
+        let val2 = resul.get(matriz[i][col]);
+        // si es und es que sale por primera vez
+        if(val2 == undefined)
+          val2 = 0;
+        resul.set(matriz[i][col], val2 + 1);
+      }
+    }
   }
   console.log(hasmap);
+  console.log(resul);
 
-
+  //ahora sacamos los positivos y negativos de cada fila
+  /*for(let i = 0; i < matriz.length; i++){
+    
+    let "elem"+i = new rama(); 
+  }*/
   
 }
 
