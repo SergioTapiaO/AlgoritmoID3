@@ -85,8 +85,10 @@ function merito(col){
     }
   }  */
 
+  //let nombres = new Array();
   // guardamos los a por cada valor en un hashmap
   for(let i = 0; i < matriz.length; i++){
+    // si es la primera vez que metemos el elemento en el hashmap
     if(hasmap.has(matriz[i][col]) ){
       let val = hasmap.get(matriz[i][col]);
       hasmap.set(matriz[i][col], val + 1);
@@ -120,7 +122,17 @@ function merito(col){
     
     let "elem"+i = new rama(); 
   }*/
-  
+
+  //para cada elemento distinto de la rama
+  for(var [key, value] of hasmap){
+    let n = hasmap.get(key) - resul.get(key);
+    let subrama = new rama(hasmap.get(key), resul.get(key), n, matriz.length);
+  }
+
+  /*for(let i = 0; i < hasmap.size; i++){
+    let n = hasmap.get(matriz[i][col]) - resul.get(matriz[i][col]);
+    let subrama = new rama(hasmap.get(matriz[i][col]), resul.get(matriz[i][col]));
+  }*/
 }
 
 function dividir(){

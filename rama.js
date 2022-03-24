@@ -1,9 +1,9 @@
 class rama{
 
-    constructor(a, p, n, r){
+    constructor(a, p, n, total){
         this.a = a;
         this.p = p;
         this.n = n;
-        this.r = r;
+        this.total = total;
     }
 }
