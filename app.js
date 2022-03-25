@@ -55,12 +55,21 @@ function iniciar(){
 
   columnas = atributos.length;
 
+  //let meritos = new Array();
+  let menor = 0;
+  let eleccion;
   //tratamos cada columna para calcular sus meritos
   // -1 porque la ultima columna es el valor
   for(let i = 0; i < columnas - 1; i++){
-    merito(i);
+    let x = merito(i);
+    //meritos.push(x);
+    if(x > menor){
+      menor = x;
+      eleccion = i;
+    }
   }
-
+  //meritos.sort();
+  console.log(eleccion);
 }
 
 function merito(col){
@@ -117,22 +126,15 @@ function merito(col){
   console.log(hasmap);
   console.log(resul);
 
-  //ahora sacamos los positivos y negativos de cada fila
-  /*for(let i = 0; i < matriz.length; i++){
-    
-    let "elem"+i = new rama(); 
-  }*/
-
+  let merito = 0;
   //para cada elemento distinto de la rama
   for(var [key, value] of hasmap){
     let n = hasmap.get(key) - resul.get(key);
     let subrama = new rama(hasmap.get(key), resul.get(key), n, matriz.length);
+    merito = merito + subrama.calcularMerito();
   }
 
-  /*for(let i = 0; i < hasmap.size; i++){
-    let n = hasmap.get(matriz[i][col]) - resul.get(matriz[i][col]);
-    let subrama = new rama(hasmap.get(matriz[i][col]), resul.get(matriz[i][col]));
-  }*/
+  return merito;
 }
 
 function dividir(){
