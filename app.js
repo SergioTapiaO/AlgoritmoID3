@@ -49,19 +49,22 @@ function leerFichero2(){
 }
 
 function iniciar(){
-  console.log(contenido);
-  console.log(atributos);
-  console.log(matriz);
-
   columnas = atributos.length;
 
   //let meritos = new Array();
   let menor = 0;
   let eleccion;
+  let tabla = new Tabla();
+
   //tratamos cada columna para calcular sus meritos
   // -1 porque la ultima columna es el valor
   for(let i = 0; i < columnas - 1; i++){
-    let x = merito(i);
+    let subrama = new Subrama();
+    let x = merito(i, subrama);
+    subrama.set_merito(x);
+    //añadimos la subrama a la tabla
+    tabla.nueva_rama(atributos[i], subrama);
+
     //meritos.push(x);
     if(x > menor){
       menor = x;
@@ -70,29 +73,12 @@ function iniciar(){
   }
   //meritos.sort();
   console.log(eleccion);
+  console.log(tabla);
 }
 
-function merito(col){
+function merito(col, subrama){
   let hasmap = new Map();
   let resul = new Map();
-  /* for(let i = 0; i < matriz.length; i++){
-
-    if(matriz[i][matriz.length - 1] == "si"){
-      let punteroValorSi = hasmap.get(matriz[i][col] + "si");
-      if(punteroValorSi != undefined){
-        punteroValorSi += 1;
-      }else{
-        hasmap.set(matriz[i][col] + "si", 1);
-      }
-    }else{
-      let punteroValorNo = hasmap.get(matriz[i][col] + "no");
-      if(punteroValorNo != undefined){
-        punteroValorNo += 1;
-      }else{
-        hasmap.set(matriz[i][col] + "no", 1);
-      }
-    }
-  }  */
 
   //let nombres = new Array();
   // guardamos los a por cada valor en un hashmap
@@ -129,14 +115,14 @@ function merito(col){
   let merito = 0;
   //para cada elemento distinto de la rama
   for(var [key, value] of hasmap){
+
     let n = hasmap.get(key) - resul.get(key);
-    let subrama = new rama(hasmap.get(key), resul.get(key), n, matriz.length);
-    merito = merito + subrama.calcularMerito();
+    let elem = new Elemento(key, hasmap.get(key), resul.get(key), n, matriz.length);
+    //calculamos el mertito para cada elemento
+    merito = merito + elem.get_merito();
+    // y luego lo sumamos al total de la subrama
+    subrama.nuevoElem(key, elem);
   }
 
   return merito;
-}
-
-function dividir(){
-  
 }
