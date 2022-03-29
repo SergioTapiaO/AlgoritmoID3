@@ -52,7 +52,7 @@ function iniciar(){
   columnas = atributos.length;
 
   //let meritos = new Array();
-  let menor = 0;
+  let menor = 1;
   let eleccion;
   let tabla = new Tabla();
 
@@ -66,14 +66,18 @@ function iniciar(){
     tabla.nueva_rama(atributos[i], subrama);
 
     //meritos.push(x);
-    if(x > menor){
+    if(x < menor){
       menor = x;
       eleccion = i;
     }
   }
   //meritos.sort();
-  console.log(eleccion);
+  console.log(tabla.ramas.get(atributos[eleccion]).nombres);
+  let filas_elem = tabla.lineas_elem(matriz, eleccion, tabla.ramas.get(atributos[eleccion]).nombres, matriz.length, columnas);
   console.log(tabla);
+
+  
+
 }
 
 function merito(col, subrama){
@@ -109,8 +113,8 @@ function merito(col, subrama){
       }
     }
   }
-  console.log(hasmap);
-  console.log(resul);
+  //console.log(hasmap);
+  //console.log(resul);
 
   let merito = 0;
   //para cada elemento distinto de la rama
@@ -126,3 +130,4 @@ function merito(col, subrama){
 
   return merito;
 }
+

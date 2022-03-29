@@ -8,4 +8,11 @@ class Tabla{
         this.ramas.set(nombre, rama);
         this.nombres_ramas.push(nombre);
     }
+
+    mostrar(){
+        console.log("---------------TABLA---------------\n");
+
+    }
+
+
 }

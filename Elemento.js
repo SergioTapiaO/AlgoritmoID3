@@ -7,7 +7,8 @@ class Elemento{
         this.n = n/a;
         this.total = N;
         this.r = a/N;
-        this.merito = this.calcularMerito()
+        this.merito = this.calcularMerito();
+        this.filas = new Array();
     }
 
     calcularMerito(){
