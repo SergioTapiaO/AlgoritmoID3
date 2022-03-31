@@ -72,10 +72,10 @@ function iniciar(){
     }
   }
   //meritos.sort();
-  console.log(tabla.ramas.get(atributos[eleccion]).nombres);
-  let filas_elem = tabla.lineas_elem(matriz, eleccion, tabla.ramas.get(atributos[eleccion]).nombres, matriz.length, columnas);
-  console.log(tabla);
-
+  //console.log(tabla.ramas.get(atributos[eleccion]).nombres);
+  //let filas_elem = tabla.lineas_elem(matriz, eleccion, tabla.ramas.get(atributos[eleccion]).nombres, matriz.length, columnas);
+ // console.log(tabla);
+  tabla.mostrar();
   
 
 }

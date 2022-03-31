@@ -16,4 +16,11 @@ class Subrama{
         this.merito = merito;
     }
 
+    mostrar(){
+        for(var [key, value] of this.elementos){
+            console.log(key);
+            this.elementos.get(key).mostrar();
+        }
+    }
+
 }

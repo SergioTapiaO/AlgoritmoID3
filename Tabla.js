@@ -11,7 +11,12 @@ class Tabla{
 
     mostrar(){
         console.log("---------------TABLA---------------\n");
-
+        for(var [key, value] of this.ramas){
+            console.log("Rama: "+key);
+            this.ramas.get(key).mostrar();
+            console.log("\n");
+        }
+        console.log("------------------------------------\n");
     }
 
 

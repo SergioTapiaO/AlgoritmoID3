@@ -20,4 +20,8 @@ class Elemento{
     get_merito(){
         return this.merito;
     }
+
+    mostrar(){
+        console.log("a: " + this.a + " p: " + this.p + " n: " + this.n + " r: " + this.r);
+    }
 }
