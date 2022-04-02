@@ -48,7 +48,7 @@ function leerFichero2(){
       });
 }
 
-function iniciar1(){
+function iniciar(){
   columnas = atributos.length;
 
   let menor = 1;
