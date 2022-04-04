@@ -95,7 +95,13 @@ function iniciar(){
 }
 
 function recursionArbol(nodo){
-  let lista = "<li><span>" + nodo.key + "</span>";
+  let lista = "<li><span";
+  switch(nodo.value){
+    case "elemento":lista+=" class='elemento'";break;
+    case "atributo":lista+=" class='atributo'";break;
+    case "final":lista+=" class='final'";break;
+  }
+  lista += ">" + nodo.key + "</span>";
   if (nodo.hasChildren) {
     lista += "<ul>";
     nodo.children.forEach(function(nodoHijo, index, array) {

@@ -1,6 +1,7 @@
 body {
     font-family: Calibri, Segoe, "Segoe UI", "Gill Sans", "Gill Sans MT", sans-serif;
-  }
+    background-color: #F9F7F7;
+}
   
   /* It's supposed to look like a tree diagram */
   .tree, .tree ul, .tree li {
@@ -22,12 +23,12 @@ body {
   }
       .tree li {
           display: table-cell;
-          padding: .5em 0;
+          padding: .8em 0;
           vertical-align: top;
       }
           /* _________ */
           .tree li:before {
-              outline: solid 1px #666;
+              outline: solid 1px #3F72AF;
               content: "";
               left: 0;
               position: absolute;
@@ -37,14 +38,23 @@ body {
           .tree li:first-child:before {left: 50%;}
           .tree li:last-child:before {right: 50%;}
   
-          .tree code, .tree span {
-              border: solid .1em #666;
+            .tree span {
+              border: solid .1em #3F72AF;
               border-radius: .2em;
               display: inline-block;
               margin: 0 .2em .5em;
               padding: .2em .5em;
               position: relative;
-          }
+              background-color:#DBE2EF;
+              font-size:x-large;
+            }
+
+            span.elemento{
+                border: .0em;
+                background-color:white;
+                color: #112D4E;
+            }
+
           /* If the tree represents DOM structure */
           .tree code {
               font-family: monaco, Consolas, 'Lucida Console', monospace;
@@ -54,7 +64,7 @@ body {
               .tree ul:before,
               .tree code:before,
               .tree span:before {
-                  outline: solid 1px #666;
+                  outline: solid 1px #3F72AF;
                   content: "";
                   height: .5em;
                   left: 50%;
