@@ -7,6 +7,8 @@ var leerContenido = false;
 let matriz = new Array();
 var columnas = undefined;
 
+let arbol = null;
+
 $(function () {
   //FORMULA MERITO
   let x = 5/8*(-2/5*Math.log2(2/5) - 3/5*Math.log2(3/5)) + 3/8*(-2/3*Math.log2(2/3) - 1/3*Math.log2(1/3));
@@ -15,7 +17,55 @@ $(function () {
     contenido = leerFichero2();
 
     $("#calcular").on("click", iniciar);
+    $("#probar").on("click", mostrarSol);
+    
 });
+
+function mostrarSol(){
+  let array = new Array();
+
+  //comprobar los radios
+  let sol = $("#soleado").is(":checked");
+  let nub = $("#nublado").is(":checked");
+  let llu = $("#lluvioso").is(":checked");
+  
+  if(sol)
+    array.push("soleado");
+  if(nub)
+    array.push("nublado");
+  if(llu)
+    array.push("lluvioso");
+  
+  let cal = $("#caluroso").is(":checked");
+  let tem = $("#templado").is(":checked");
+  let fri = $("#frio").is(":checked");
+
+  if(cal)
+    array.push("caluroso");
+  if(tem)
+    array.push("templado");
+  if(fri)
+    array.push("frio");
+
+  let alt = $("#alta").is(":checked");
+  let nor = $("#normal").is(":checked");
+
+  if(alt)
+    array.push("alta");
+  if(nor)
+    array.push("normal");
+
+  let ver = $("#verdad").is(":checked");
+  let fal = $("#falso").is(":checked");
+
+  if(ver)
+    array.push("verdad");
+  if(fal)
+    array.push("falso");
+
+  console.log(array);
+
+}
 
 function leerFichero1(){
     document.getElementById('atributos').addEventListener('change', function() {
@@ -50,7 +100,7 @@ function leerFichero2(){
 
 function iniciar(){
   columnas = atributos.length;
-
+  
   let menor = 1;
   let eleccion;
   let tabla = new Tabla();
@@ -59,7 +109,9 @@ function iniciar(){
   // -1 porque la ultima columna es el valor
   for(let i = 0; i < columnas - 1; i++){
     let subrama = new Subrama();
+    console.log(atributos[i]);
     let x = merito(i, subrama, matriz);
+    console.log(x);
     subrama.set_merito(x);
     //añadimos la subrama a la tabla
     tabla.nueva_rama(atributos[i], subrama);
@@ -74,9 +126,37 @@ function iniciar(){
   tabla.mostrar();
   
   let nombresElems = tabla.ramas.get(atributos[eleccion]).nombres;
-  atributos.splice(eleccion, 1);
-  recursion(eleccion, atributos, matriz, columnas, nombresElems);    
 
+  //Generamos el arbol con padre el primer atributo elegido
+  let padre = atributos[eleccion];
+  arbol = new Tree(padre,"atributo");
+  
+  atributos.splice(eleccion, 1);//Eliminamos el primer elemento
+  recursion(eleccion, atributos, matriz, columnas, nombresElems, padre);  
+
+  console.log([...arbol.preOrderTraversal()]);
+  console.log(arbol);
+  
+  $(".tree").html(recursionArbol(arbol.root));//Generar el codigo para imrpimir la lista en el HTML
+
+}
+
+function recursionArbol(nodo){
+  let lista = "<li><span";
+  switch(nodo.value){
+    case "elemento":lista+=" class='elemento'";break;
+    case "atributo":lista+=" class='atributo'";break;
+    case "final":lista+=" class='final'";break;
+  }
+  lista += ">" + nodo.key + "</span>";
+  if (nodo.hasChildren) {
+    lista += "<ul>";
+    nodo.children.forEach(function(nodoHijo, index, array) {
+      lista += recursionArbol(nodoHijo);
+    });
+    lista += "</ul>"
+  }
+  return lista + "</li>";
 }
 
 function quitarColumna(matrizV, col){
@@ -171,21 +251,21 @@ function merito(col, subrama, matriz){
   return merito;
 }
 
-function recursion(col, listaAtributos, listaEjemplos, final, elementos){
+function recursion(col, listaAtributos, listaEjemplos, final, elementos, padre){
   //comrobar que no sean todos si o no
   if(!comprobar_final(listaEjemplos, final)){
 
     //tantas ramas como atributos o elementos
     for(let i = 0; i < elementos.length; i++){
-
+      //Para el padre de los atributos insertamos nuevo elemento
       let nuevo_contenido = new Array();
-
+      arbol.insert(padre, elementos[i], "elemento")
       for(let j = 0; j < listaEjemplos.length;  j++){
         if(listaEjemplos[j][col] == elementos[i]){
           nuevo_contenido.push(listaEjemplos[j]);
         }
       } //for interno 1
-
+      
       //COMPROBAR EL FINAL 
       if(!comprobar_final(nuevo_contenido, final)){
         let menor = 1;
@@ -208,19 +288,18 @@ function recursion(col, listaAtributos, listaEjemplos, final, elementos){
         } //for interno 2
         // sacar la de menos merito 
         //recurison aqui
+        let padre2 = listaAtributos[eleccion];
         let nombresElems = tabla.ramas.get(atributos[eleccion]).nombres;
-
-        recursion(eleccion, quitarRama(listaAtributos, eleccion), nuevo_contenido, final - 1, nombresElems);
-    }
-    else{
-      //FINAL
-    }
-
+        //Insertamos como hijo del elemneto el nuevo atributo con menos merito
+        arbol.insert(elementos[i],padre2, "atributo");
+        recursion(eleccion, quitarRama(listaAtributos, eleccion), nuevo_contenido, final - 1, nombresElems, padre2);
+      }else{
+        let valor=nuevo_contenido[0][nuevo_contenido[0].length - 1];
+        arbol.insert(elementos[i],valor, "final");
+      }
     } //for externo
-
-  }
-  else{
-    //se termina
-
+  }else{
+    let valor=listaEjemplos[0][listaEjemplos[0].length - 1];
+    arbol.insert(padre, valor, "final" );
   }
 }
