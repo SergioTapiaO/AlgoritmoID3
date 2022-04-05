@@ -35,33 +35,48 @@ function mostrarSol(){
     array.push("nublado");
   if(llu)
     array.push("lluvioso");
+
   
   let cal = $("#caluroso").is(":checked");
   let tem = $("#templado").is(":checked");
   let fri = $("#frio").is(":checked");
 
-  if(cal)
+  if(cal){
     array.push("caluroso");
-  if(tem)
+    array.push("Temperatura");
+  }
+  if(tem){
     array.push("templado");
-  if(fri)
+    array.push("Temperatura");
+  }
+  if(fri){
     array.push("frio");
+    array.push("Temperatura");
+  }
 
   let alt = $("#alta").is(":checked");
   let nor = $("#normal").is(":checked");
 
-  if(alt)
+  if(alt){
+    array.push("Humedad");
     array.push("alta");
-  if(nor)
+  }
+  if(nor){
     array.push("normal");
+    array.push("Humedad");
+  }
 
   let ver = $("#verdad").is(":checked");
   let fal = $("#falso").is(":checked");
 
-  if(ver)
+  if(ver){
     array.push("verdad");
-  if(fal)
+    array.push("Viento");
+  }
+  if(fal){
     array.push("falso");
+    array.push("Viento");
+  }
 
   $("#solucion").text("Solucion: "+ recursionProbar(arbol.root, array));
 
