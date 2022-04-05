@@ -17,7 +17,6 @@ $(function () {
     contenido = leerFichero2();
 
     $("#calcular").on("click", iniciar);
-    
 });
 
 function leerFichero1(){
@@ -49,6 +48,17 @@ function leerFichero2(){
         file.readAsText(this.files[0]);
         
       });
+}
+
+function recuResultado(nodo, arrayComprobar){
+  if(nodo.isLeaf){
+    return nodo.key;
+  }else{
+    nodo.children.forEach(function(hijo){
+      if(arrayComprobar.includes(hijo.key))
+        return recuResultado(hijo,arrayComprobar);
+    });
+  }
 }
 
 function iniciar(){
