@@ -63,8 +63,19 @@ function mostrarSol(){
   if(fal)
     array.push("falso");
 
-  console.log(array);
+  $("#solucion").text("Solucion: "+ recursionProbar(arbol.root, array));
 
+}
+
+function recursionProbar(nodo, arrayComprobar){
+ for(let i = 0; i < nodo.children.length; i++){
+    let hijo = nodo.children[i];
+    if(hijo.isLeaf)
+      return hijo.key;
+    if(arrayComprobar.includes(hijo.key))
+      return recursionProbar(hijo, arrayComprobar);
+  }
+  return "error"
 }
 
 function leerFichero1(){
